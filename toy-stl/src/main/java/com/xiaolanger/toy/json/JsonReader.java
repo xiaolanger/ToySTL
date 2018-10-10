@@ -4,7 +4,7 @@ import com.xiaolanger.toy.list.ByteLink;
 import com.xiaolanger.toy.list.Link;
 import com.xiaolanger.toy.map.Hash;
 
-public class Json {
+public class JsonReader {
     private static final String TRUE = "true";
     private static final String FALSE = "false";
     private static final String NULL = "null";
@@ -14,7 +14,7 @@ public class Json {
     // json bytes
     private byte[] bytes;
 
-    public Json(String jsonString) {
+    public JsonReader(String jsonString) {
         this.bytes = jsonString.getBytes();
     }
 
@@ -55,7 +55,7 @@ public class Json {
 
         Hash<String, Object> map = new Hash<>();
         while (true) {
-            String key = parseString();
+            String key = (String) parseString();
             if (getChar() != ':') throw new RuntimeException("illegal JsonObject");
             Object value = parseValue();
             map.put(key, value);
@@ -68,10 +68,10 @@ public class Json {
         }
 
         if (getChar() != '}') throw new RuntimeException("illegal end of JsonObject");
-        return map;
+        return new JsonObject(map);
     }
 
-    private String parseString() {
+    private Object parseString() {
         if (getChar() != '"') throw new RuntimeException("illegal start of String");
 
         ByteLink array = new ByteLink();
@@ -92,19 +92,44 @@ public class Json {
         if (!Character.isDigit(c) && c != '-') throw new RuntimeException("illegal start of Number");
 
         ByteLink array = new ByteLink();
-        while (Character.isDigit(c) || c == '.' || c == '-') {
+
+        boolean positive;
+        // consume '-'
+        if (c == '-') {
+            positive = false;
+            c = getChar();
+        } else {
+            positive = true;
+        }
+
+        while (Character.isDigit(c)) {
             array.add(c);
             c = getChar();
         }
-        unGetChar();
 
-        try {
-            String number = new String(array.toArray());
-            if (number.startsWith("00") || number.endsWith("."))
-                throw new RuntimeException("illegal Number format");
-            return Double.valueOf(number);
-        } catch (NumberFormatException e) {
-            throw new RuntimeException("illegal Number format");
+        if (array.size() > 1 && array.get(0) == '0') throw new RuntimeException("illegal start of Number");
+
+        if (c != '.') {
+            unGetChar();
+            if (!positive) {
+                array.add(0, (byte) '-');
+            }
+            return Integer.valueOf(new String(array.toArray()));
+        } else {
+            array.add(c);
+            c = getChar();
+
+            if (!Character.isDigit(c)) throw new RuntimeException("illegal start of Number");
+
+            while (Character.isDigit(c)) {
+                array.add(c);
+                c = getChar();
+            }
+            unGetChar();
+            if (!positive) {
+                array.add(0, (byte) '-');
+            }
+            return Double.valueOf(new String(array.toArray()));
         }
     }
 
@@ -177,7 +202,7 @@ public class Json {
         return object;
     }
 
-    private Link<Object> parseArray() {
+    private Object parseArray() {
         if (getChar() != '[') throw new RuntimeException("illegal start of JsonArray");
 
         if (getChar() == ']') {
@@ -199,7 +224,7 @@ public class Json {
         }
 
         if (getChar() != ']') throw new RuntimeException("illegal end of JsonArray");
-        return list;
+        return new JsonArray(list);
     }
 
 }
