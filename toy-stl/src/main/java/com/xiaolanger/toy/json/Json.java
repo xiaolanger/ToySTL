@@ -5,6 +5,10 @@ import com.xiaolanger.toy.list.Link;
 import com.xiaolanger.toy.map.Hash;
 
 public class Json {
+    private static final String TRUE = "true";
+    private static final String FALSE = "false";
+    private static final String NULL = "null";
+
     // current pointer
     private int p;
     // json bytes
@@ -105,17 +109,43 @@ public class Json {
     }
 
     private Object parseBool() {
-        ByteLink array = new ByteLink();
-        array.add(getChar());
-        array.add(getChar());
-        array.add(getChar());
-        array.add(getChar());
-        if (new String(array.toArray()).equals("true")) return true;
+        byte c = getChar();
 
-        array.add(getChar());
-        if (new String(array.toArray()).equals("false")) return false;
+        if (c == 't') {
+            // true
+            for (int i = 1; i < TRUE.length(); i++) {
+                if (getChar() != TRUE.charAt(i)) {
+                    throw new RuntimeException("illegal Bool format");
+                }
+            }
+            return true;
+        }
+
+        if (c == 'f') {
+            // false
+            for (int i = 1; i < FALSE.length(); i++) {
+                if (getChar() != FALSE.charAt(i)) {
+                    throw new RuntimeException("illegal Bool format");
+                }
+            }
+            return false;
+        }
 
         throw new RuntimeException("illegal Bool format");
+    }
+
+    private Object parseNull() {
+        if (getChar() == 'n') {
+            // null
+            for (int i = 1; i < NULL.length(); i++) {
+                if (getChar() != NULL.charAt(i)) {
+                    throw new RuntimeException("illegal null format");
+                }
+            }
+            return null;
+        }
+
+        throw new RuntimeException("illegal null format");
     }
 
     private Object parseValue() {
@@ -137,6 +167,9 @@ public class Json {
         } else if (c == 't' || c == 'f') {
             unGetChar();
             object = parseBool();
+        } else if (c == 'n') {
+            unGetChar();
+            object = parseNull();
         } else {
             throw new RuntimeException("illegal start of JsonValue");
         }
