@@ -104,4 +104,21 @@ public class Hash<K, V> {
         }
         return Math.abs(sum % container.length);
     }
+
+    public K[] keys() {
+        int k = 0;
+        K[] array = (K[]) new Object[size];
+
+        for (int i = 0; i < container.length; i++) {
+            Link<Pair<K, V>> link = container[i];
+            if (link != null) {
+                for (int j = 0; j < link.size(); j++) {
+                    array[k] = link.get(j).key;
+                    k++;
+                }
+            }
+        }
+
+        return array;
+    }
 }
