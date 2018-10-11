@@ -145,7 +145,7 @@ public class LinkHash<K, V> {
         return Math.abs(sum % container.length);
     }
 
-    public K[] keys() {
+    public Array<K> keys() {
         Array<K> array = new Array<>(size);
 
         Pair<K, V> p = head;
@@ -154,6 +154,6 @@ public class LinkHash<K, V> {
             p = p.next;
         }
 
-        return array.toArray();
+        return array;
     }
 }

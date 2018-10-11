@@ -106,7 +106,7 @@ public class Hash<K, V> {
         return Math.abs(sum % container.length);
     }
 
-    public K[] keys() {
+    public Array<K> keys() {
         Array<K> array = new Array<>(size);
 
         for (int i = 0; i < container.length; i++) {
@@ -118,6 +118,6 @@ public class Hash<K, V> {
             }
         }
 
-        return array.toArray();
+        return array;
     }
 }

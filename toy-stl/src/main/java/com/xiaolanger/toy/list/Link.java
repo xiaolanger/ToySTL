@@ -69,20 +69,6 @@ public class Link<V> {
         return size;
     }
 
-    public V[] toArray() {
-        Node<V> p = header;
-        V[] array = (V[]) new Object[size];
-
-        int index = 0;
-        while (p != null) {
-            array[index] = p.value;
-            p = p.next;
-            index++;
-        }
-
-        return array;
-    }
-
     public V get(int index) {
         if (index >= size) {
             throw new RuntimeException("out of bounds");

@@ -45,12 +45,6 @@ public class Array<V> {
         return size;
     }
 
-    public V[] toArray() {
-        V[] array = (V[]) new Object[size];
-        System.arraycopy(container, 0, array, 0, size);
-        return array;
-    }
-
     public V get(int index) {
         if (index >= size) {
             throw new RuntimeException("out of bounds");
@@ -69,4 +63,5 @@ public class Array<V> {
 
         return null;
     }
+
 }

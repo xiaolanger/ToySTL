@@ -1,5 +1,6 @@
 package com.xiaolanger.toy.map;
 
+import com.xiaolanger.toy.list.Array;
 import com.xiaolanger.toy.util.RandomUtil;
 import org.junit.Assert;
 import org.junit.Test;
@@ -45,13 +46,13 @@ public class LinkHashTest {
         }
 
         // check keys size
-        Object[] ks = hash.keys();
-        Assert.assertEquals(map.size(), ks.length);
+        Array<String> ks = hash.keys();
+        Assert.assertEquals(map.size(), ks.size());
 
         // check keys content
         int i = 0;
         for (String key : map.keySet()) {
-            Assert.assertEquals(key, ks[i]);
+            Assert.assertEquals(key, ks.get(i));
             i++;
         }
     }

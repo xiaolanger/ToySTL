@@ -2,7 +2,7 @@ package com.xiaolanger.toy.json;
 
 import com.xiaolanger.toy.list.ByteLink;
 import com.xiaolanger.toy.list.Link;
-import com.xiaolanger.toy.map.Hash;
+import com.xiaolanger.toy.map.LinkHash;
 
 public class JsonReader {
     private static final String TRUE = "true";
@@ -53,7 +53,7 @@ public class JsonReader {
             unGetChar();
         }
 
-        Hash<String, Object> map = new Hash<>();
+        LinkHash<String, Object> map = new LinkHash<>();
         while (true) {
             String key = (String) parseString();
             if (getChar() != ':') throw new RuntimeException("illegal JsonObject");

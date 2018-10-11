@@ -1,5 +1,6 @@
 package com.xiaolanger.toy.map;
 
+import com.xiaolanger.toy.list.Array;
 import com.xiaolanger.toy.util.RandomUtil;
 import org.junit.Assert;
 import org.junit.Test;
@@ -45,10 +46,12 @@ public class HashTest {
             Assert.assertEquals(map.get(key), hash.get(key));
         }
 
-        Object[] ks1 = hash.keys();
-        Object[] ks2 = new Object[map.size()];
+        Array<String> ks = hash.keys();
+        String[] ks1 = new String[hash.size()];
+        String[] ks2 = new String[map.size()];
         int i = 0;
         for (String key : map.keySet()) {
+            ks1[i] = ks.get(i);
             ks2[i] = key;
             i++;
         }

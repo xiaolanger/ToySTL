@@ -1,11 +1,16 @@
 package com.xiaolanger.toy.json;
 
-import com.xiaolanger.toy.map.Hash;
+import com.xiaolanger.toy.list.Array;
+import com.xiaolanger.toy.map.LinkHash;
 
 public class JsonObject {
-    private Hash json;
+    private LinkHash<String, Object> json;
 
-    public JsonObject(Hash json) {
+    public JsonObject() {
+        this.json = new LinkHash<>();
+    }
+
+    public JsonObject(LinkHash json) {
         this.json = json;
     }
 
@@ -42,5 +47,17 @@ public class JsonObject {
 
     public boolean getBool(String key) {
         return Boolean.parseBoolean(getString(key));
+    }
+
+    public Object get(String key) {
+        return json.get(key);
+    }
+
+    public int size() {
+        return json.size();
+    }
+
+    public Array<String> keys() {
+        return json.keys();
     }
 }

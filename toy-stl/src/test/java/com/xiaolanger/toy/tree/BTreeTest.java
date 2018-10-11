@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 public class BTreeTest {
-    private static final int BENCH_COUNT = 10000000;
+    private static final int BENCH_COUNT = 10000;
     private CostUtil costUtil = new CostUtil();
     private List<String> keys = RandomUtil.genRandomStringList(BENCH_COUNT);
 

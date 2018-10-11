@@ -5,6 +5,10 @@ import com.xiaolanger.toy.list.Link;
 public class JsonArray {
     private Link json;
 
+    public JsonArray() {
+        this.json = new Link();
+    }
+
     public JsonArray(Link json) {
         this.json = json;
     }
@@ -43,4 +47,13 @@ public class JsonArray {
     public boolean getBool(int position) {
         return Boolean.parseBoolean(getString(position));
     }
+
+    public Object get(int position) {
+        return json.get(position);
+    }
+
+    public int size() {
+        return json.size();
+    }
+
 }

@@ -3,7 +3,7 @@ package com.xiaolanger.toy.json;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class JsonReaderTest {
+public class JsonTest {
     @Test
     public void testJsonObject() {
         String jsonObjectString = "{\"_id\":\"5bbdc3a66f1b9997c1b9dbd2\",\"index\":0,\"guid\":\"99dc869f-b469-4a55-a2b6-4abb42732c68\",\"isActive\":true,\"balance\":\"$2,472.25\",\"picture\":\"http://placehold.it/32x32\",\"age\":30,\"eyeColor\":\"green\",\"name\":\"Ruiz Gutierrez\",\"gender\":\"male\",\"company\":\"ECSTASIA\",\"email\":\"ruizgutierrez@ecstasia.com\",\"phone\":\"+1 (927) 553-2002\",\"address\":\"315 Rugby Road, Wilmington, Minnesota, 8382\",\"about\":\"Laborum et mollit sit est est cillum cupidatat ad fugiat irure deserunt id aliqua. Sit ea nostrud tempor cillum adipisicing est. Consectetur ad labore irure Lorem aliquip commodo culpa sint ut mollit. Laboris irure qui tempor laboris id ullamco aute. Cupidatat Lorem laborum labore id adipisicing qui ut. Quis esse Lorem esse amet.\\r\\n\",\"registered\":\"2014-05-22T10:41:13 -08:00\",\"latitude\":-40.462645,\"longitude\":34.731448,\"tags\":[\"aliquip\",\"tempor\",\"nulla\",\"sint\",\"nisi\",\"culpa\",\"in\"],\"friends\":[{\"id\":0,\"name\":\"Earlene Wade\"},{\"id\":1,\"name\":\"Nona Langley\"},{\"id\":2,\"name\":\"Genevieve Preston\"}],\"greeting\":\"Hello, Ruiz Gutierrez! You have 7 unread messages.\",\"favoriteFruit\":\"apple\"}";
@@ -12,6 +12,9 @@ public class JsonReaderTest {
         Assert.assertEquals(jo.getJsonArray("friends").getJsonObject(2).getInt("id"), 2);
         Assert.assertEquals(jo.getBool("isActive"), true);
         Assert.assertEquals(jo.getDouble("latitude"), -40.462645, 0.0000000001);
+
+        String jsonString = JsonWriter.write(jo);
+        Assert.assertEquals(jsonObjectString, jsonString);
     }
 
     @Test
@@ -21,5 +24,8 @@ public class JsonReaderTest {
 
         Assert.assertEquals(ja.getJsonObject(1).getBool("isActive"), true);
         Assert.assertEquals(ja.getJsonObject(2).getJsonArray("range").getInt(3), 3);
+
+        String jsonString = JsonWriter.write(ja);
+        Assert.assertEquals(jsonArrayString, jsonString);
     }
 }
