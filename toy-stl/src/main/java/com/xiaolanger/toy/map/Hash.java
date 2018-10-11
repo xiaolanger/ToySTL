@@ -1,5 +1,6 @@
 package com.xiaolanger.toy.map;
 
+import com.xiaolanger.toy.list.Array;
 import com.xiaolanger.toy.list.Link;
 
 public class Hash<K, V> {
@@ -106,19 +107,17 @@ public class Hash<K, V> {
     }
 
     public K[] keys() {
-        int k = 0;
-        K[] array = (K[]) new Object[size];
+        Array<K> array = new Array<>(size);
 
         for (int i = 0; i < container.length; i++) {
             Link<Pair<K, V>> link = container[i];
             if (link != null) {
                 for (int j = 0; j < link.size(); j++) {
-                    array[k] = link.get(j).key;
-                    k++;
+                    array.add(link.get(j).key);
                 }
             }
         }
 
-        return array;
+        return array.toArray();
     }
 }

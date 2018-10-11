@@ -5,6 +5,11 @@ public class Array<V> {
     private int capacity;
     private int size;
 
+    public Array(int capacity) {
+        this.capacity = capacity;
+        container = (V[]) new Object[capacity];
+    }
+
     public Array() {
         capacity = 8;
         container = (V[]) new Object[capacity];

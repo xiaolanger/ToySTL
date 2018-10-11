@@ -4,6 +4,7 @@ import com.xiaolanger.toy.util.RandomUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,6 +43,23 @@ public class HashTest {
         // check content
         for (String key : keys) {
             Assert.assertEquals(map.get(key), hash.get(key));
+        }
+
+        Object[] ks1 = hash.keys();
+        Object[] ks2 = new Object[map.size()];
+        int i = 0;
+        for (String key : map.keySet()) {
+            ks2[i] = key;
+            i++;
+        }
+        Arrays.sort(ks1);
+        Arrays.sort(ks2);
+
+        // check keys size
+        Assert.assertEquals(ks2.length, ks1.length);
+        // check keys content
+        for (int j = 0; j < ks2.length; j++) {
+            Assert.assertEquals(ks2[j], ks1[j]);
         }
     }
 }
