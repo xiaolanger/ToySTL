@@ -3,18 +3,19 @@ package com.xiaolanger.toy.json;
 import com.xiaolanger.toy.list.Link;
 
 public class JsonArray {
-    private Link json;
+    private JsonParser parser = new JsonParser();
+    private Link<Object> json;
 
     public JsonArray() {
-        this.json = new Link();
+        this.json = new Link<>();
     }
 
-    public JsonArray(Link json) {
+    public JsonArray(Link<Object> json) {
         this.json = json;
     }
 
     public JsonArray(String jsonString) {
-        Object o = new JsonReader(jsonString).parseJson();
+        Object o = parser.parse(jsonString);
         JsonArray jsonArray = (JsonArray) o;
         this.json = jsonArray.json;
     }

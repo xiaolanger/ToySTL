@@ -4,18 +4,19 @@ import com.xiaolanger.toy.list.Array;
 import com.xiaolanger.toy.map.LinkHash;
 
 public class JsonObject {
+    private JsonParser parser = new JsonParser();
     private LinkHash<String, Object> json;
 
     public JsonObject() {
         this.json = new LinkHash<>();
     }
 
-    public JsonObject(LinkHash json) {
+    public JsonObject(LinkHash<String, Object> json) {
         this.json = json;
     }
 
     public JsonObject(String jsonString) {
-        Object o = new JsonReader(jsonString).parseJson();
+        Object o = parser.parse(jsonString);
         JsonObject jsonObject = (JsonObject) o;
         this.json = jsonObject.json;
     }

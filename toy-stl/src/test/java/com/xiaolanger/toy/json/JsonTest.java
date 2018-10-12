@@ -13,7 +13,7 @@ public class JsonTest {
         Assert.assertEquals(jo.getBool("isActive"), true);
         Assert.assertEquals(jo.getDouble("latitude"), -40.462645, 0.0000000001);
 
-        String jsonString = JsonWriter.write(jo);
+        String jsonString = JsonParser.stringfy(jo);
         Assert.assertEquals(jsonObjectString, jsonString);
     }
 
@@ -25,7 +25,7 @@ public class JsonTest {
         Assert.assertEquals(ja.getJsonObject(1).getBool("isActive"), true);
         Assert.assertEquals(ja.getJsonObject(2).getJsonArray("range").getInt(3), 3);
 
-        String jsonString = JsonWriter.write(ja);
+        String jsonString = JsonParser.stringfy(ja);
         Assert.assertEquals(jsonArrayString, jsonString);
     }
 }
